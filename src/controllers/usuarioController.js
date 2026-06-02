@@ -2,8 +2,7 @@ const conexao = require('../database/conexao')
 
 async function listarUsuarios(req,res){
     const usuario = await conexao.query(
-        'SELECT * FROM usuarios WHERE nomeUuario = ?',
-        [nomeUsuario]
+        'SELECT * FROM usuarios'
     );
 
     try {
@@ -14,12 +13,28 @@ async function listarUsuarios(req,res){
     } catch (erro) {
 
         console.error(erro);
+
         res.status(500).json({
             mensagem: `Erro ao buscar usuários`
         });
     };
 };
 
+async function criarUsuario(req,res){
+
+};
+
+async function atualizarUsuario(req,res){
+
+};
+
+async function deletarUsuario(req,res){
+    
+};
+
 module.exports = {
-    listarUsuarios
-}
+    listarUsuarios,
+    criarUsuario,
+    atualizarUsuario,
+    deletarUsuario
+};
