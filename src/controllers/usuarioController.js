@@ -2,8 +2,17 @@ const conexao = require('../database/conexao')
 
 async function listarUsuarios(req,res){
     const usuario = await conexao.query(
-        'SELECT * FROM usuarios'
-    );
+        `SELECT a.idAgendamento,
+                u.nomeUsuario, 
+                s.nomeServico, 
+                s.preco, 
+                a.dataAgendamento 
+        FROM usuarios AS u 
+        INNER JOIN agendamentos AS a 
+            ON a.FKidUsuario = u.idUsuario 
+        INNER JOIN servicos AS s 
+            ON a.FKidServico = s.idServico`
+    ); // fazer com id
 
     try {
 
@@ -21,7 +30,37 @@ async function listarUsuarios(req,res){
 };
 
 async function criarUsuario(req,res){
+    const {
+        nomeUsuario,
+        emailUsuario,
+        senhaUsuario
+    } = req.body;
 
+    try {
+        const sql = `
+            INSERT INTO usuarios
+            (nomeUsuario,
+            emailUsuario,
+            senhaUsuario)
+            VALUES (?,?,?)
+        `;
+
+        const resultado = await conexao.query(
+            sql,[nomeUsuario,emailUsuario,senhaUsuario]
+        );
+
+        res.status(201).json({
+            mensagem: 'Usuario criado com sucesso',
+            id: resultado[0].insertId
+        });
+
+    } catch (erro) {
+
+        console.log(erro);
+        res.status(500).json({
+            mensagem: 'Erro ao criar usuário'
+        });
+    };
 };
 
 async function atualizarUsuario(req,res){

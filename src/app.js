@@ -5,6 +5,6 @@ const usuarioRoutes = require('./routes/usuarioRoutes'); // contato o route do u
 
 app.use(express.json()); // permite o uso de json com http
 
-app.use('/usuarios', usuarioRoutes); 
+app.use('/usuario', usuarioRoutes); 
 
 module.exports = app;
