@@ -1,4 +1,5 @@
 const conexao = require('../database/conexao') 
+//const bcrypt = require('bcrypt')
 
 async function listarUsuarios(req,res){
     const usuario = await conexao.query(
