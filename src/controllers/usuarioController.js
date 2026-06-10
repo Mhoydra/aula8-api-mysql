@@ -67,7 +67,39 @@ async function criarUsuario(req,res){
 };
 
 async function atualizarUsuario(req,res){
+    const { id } = req.params;
 
+    const {
+        nomeUsuario,
+        emailUsuario
+    } = req.body;
+
+    try {
+        const [resultado] = await conexao.query(
+            `UPDATE usuarios
+             SET nomeUsuario = ?,
+                 emailUsuario = ?
+             WHERE idUsuario = ?`,
+            [nomeUsuario, emailUsuario, id]
+        );
+
+        if (resultado.affectedRows === 0) {
+            return res.status(404).json({
+                mensagem: 'Usuário não encontrado'
+            });
+        }
+
+        res.status(200).json({
+            mensagem: 'Usuário atualizado com sucesso'
+        });
+
+    } catch (erro) {
+        console.error(erro);
+
+        res.status(500).json({
+            mensagem: 'Erro ao atualizar usuário'
+        });
+    }
 };
 
 async function deletarUsuario(req,res){
