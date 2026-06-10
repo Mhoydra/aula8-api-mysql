@@ -1,5 +1,6 @@
-const conexao = require('../database/conexao') 
-//const bcrypt = require('bcrypt')
+const conexao = require('../database/conexao');
+const bcrypt = require('bcrypt');
+const casas = 10;
 
 async function listarUsuarios(req,res){
     const usuario = await conexao.query(
@@ -34,10 +35,11 @@ async function criarUsuario(req,res){
     const {
         nomeUsuario,
         emailUsuario,
-        senhaUsuario
+        senhaOriginal
     } = req.body;
 
     try {
+        const senhaUsuario = await bcrypt.hash(senhaOriginal,casas);
         const sql = `
             INSERT INTO usuarios
             (nomeUsuario,
