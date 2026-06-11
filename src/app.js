@@ -6,6 +6,7 @@ const servicoRoutes = require('./routes/servicoRoutes');
 const agendamentoRoutes = require('./routes/agendamentoRoutes');
 
 app.use(express.json()); // permite o uso de json com http
+app.use(express.static('public'));
 
 app.use('/usuario', usuarioRoutes); 
 app.use('/servico', servicoRoutes);
