@@ -1,5 +1,6 @@
 const conexao = require('../database/conexao');
 const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
 
 async function testeLoginUsuario(req,res){
     const { emailUsuario, senhaCripto } = req.body;
@@ -32,14 +33,29 @@ async function testeLoginUsuario(req,res){
             });
         }
 
-        res.json({
+        const token = jwt.sign(
+            {
+                id: usuario.idUsuario,
+                nome: usuario.idUsuario,
+                email: usuario.emailUsuario
+            }
+            ,process.env.JWT_SECRET,
+            {
+                expiresIn: process.env.JWT_EXPIRES_IN
+            }
+        )
+
+        res.status(200).json({
             mensagem: 'Login realizado com sucesso!',
+            token,
             usuario: {
                 id: usuario.idUsuario,
                 nome: usuario.nomeUsuario,
                 email: usuario.emailUsuario
             }
         });
+        
+        
 
     } catch (erro) {
         console.error(erro);
