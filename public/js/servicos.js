@@ -1,5 +1,12 @@
+const token = localStorage.getItem('token');
+
+if (!token) {
+	window.location.href = '/login.html '
+}
+
 async function carregarServicos() {
 	const lista = document.getElementById('lista-servicos');
+
 
 	try {
 		const resposta = await fetch('/api/servicos');

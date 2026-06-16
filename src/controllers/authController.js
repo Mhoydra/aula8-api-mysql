@@ -54,8 +54,6 @@ async function testeLoginUsuario(req,res){
                 email: usuario.emailUsuario
             }
         });
-        
-        
 
     } catch (erro) {
         console.error(erro);

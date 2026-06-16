@@ -1,16 +1,12 @@
 const express = require('express');
 const router = express.Router();
 
-const { 
-    listarServicos, 
-    criarServico, 
-    atualizarServico, 
-    deletarServico 
-} = require('../controllers/servicoController');
+const autenticarToken = require('../middlewares/authMiddleware');
+const servicoController = require('../controllers/servicoController');
 
-router.get('/',listarServicos);
-router.post('/',criarServico);
-router.put('/:idServico',atualizarServico);
-router.delete('/:idServico',deletarServico);
+router.get('/', servicoController.listarServicos);
+router.post('/', autenticarToken, servicoController.criarServico);
+router.put('/:idServico', autenticarToken, servicoController.atualizarServico);
+router.delete('/:idServico', autenticarToken, servicoController.deletarServico);
 
 module.exports = router
